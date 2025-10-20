@@ -1,0 +1,473 @@
+  Experiment No 1 
+Name of Student         M.Sc II Roll No 
+Title of Experiment- To write a program to sense the available networks using Arduino 
+Program Arduino Code: 
+#include <ESP8266WiFi.h> 
+void setup() { 
+  Serial.begin(115200); 
+  WiFi.disconnect();  // disconnect previously connected access point  
+  delay(200); // delay 200ms 
+ 
+  Serial.println("***** WiFi Scan Started *****"); 
+} 
+ 
+void loop() { 
+   
+  int n = WiFi.scanNetworks(); // WiFi.scanNetworks will return the number of networks found 
+    
+  Serial.println("Scan done"); 
+   
+  if (n == 0) 
+    Serial.println("No Network Found"); 
+  else 
+  { 
+    Serial.print(n); 
+    Serial.println(" Networks found"); 
+    for (int i = 0; i < n; ++i) 
+    { 
+      // Print SSID, RSSI, MAC, Encryption for each network found 
+      Serial.print(i + 1);  //Sr. No 
+      Serial.print(": "); 
+      Serial.print(WiFi.SSID(i)); //SSID 
+      Serial.print(" ("); 
+      Serial.print(WiFi.RSSI(i)); //Signal Strength 
+      Serial.print(") MAC:"); 
+      Serial.print(WiFi.BSSIDstr(i)); 
+      Serial.println((WiFi.encryptionType(i) == ENC_TYPE_NONE)? " Unsecured" : " Secured" 
+); 
+      delay(10); 
+    } 
+  } 
+  Serial.println(""); 
+ 
+  delay(6000); // delay 6sec  
+} 
+ 
+ 
+ 
+ 
+Experiment No 2 
+Name of Student         
+M.Sc II Roll No 
+Title of Experiment- To write a program to measure the distance using ultrasonic sensor 
+and make LED blink using Arduino. 
+Program 
+int trigPin = D4; 
+int echoPin = D8; 
+void setup() 
+{ 
+pinMode(trigPin, OUTPUT); 
+pinMode(echoPin, INPUT); 
+Serial.begin(9600); 
+} 
+void loop() 
+{ 
+digitalWrite(trigPin, LOW); 
+delayMicroseconds(2); 
+digitalWrite(trigPin, HIGH);            
+delayMicroseconds(10); 
+digitalWrite(trigPin, LOW); 
+//set the trigger pin high to provide a bus; 
+int duration = pulseIn(echoPin, HIGH);  //used to check duration of wave (tx & 
+rx); 
+int distance = duration * 0.034 / 2; 
+Serial.print("Distance in cm is: "); 
+Serial.println(distance); 
+delay(100); 
+} 
+
+
+
+
+
+
+
+
+Experiment No 3 
+Name of Student         
+M.Sc II Roll No 
+Title of Experiment- To write a program to detects the vibration of an object with sensor using 
+Arduino. 
+Program 
+int vibrationSensorPin = A0; 
+int counter;          // count n samples 
+int newValue; 
+int minValue; 
+int maxValue; 
+void setup() 
+{ 
+} 
+Serial.begin(115200); 
+counter = 0;                  // start at the begin 
+minValue = analogRead(vibrationSensorPin);  
+maxValue = analogRead(vibrationSensorPin); // give them a value from the sensor to start with 
+void loop() 
+{ 
+newValue = analogRead(vibrationSensorPin); 
+if ( newValue >= maxValue) 
+{ 
+maxValue = newValue; 
+} 
+else 
+{ 
+minValue = newValue;          
+counter++; 
+if ( counter == 50) 
+{ 
+Serial.print(minValue); 
+Serial.print("  "); 
+Serial.print(maxValue); 
+Serial.print("  "); 
+} 
+if ((maxValue - minValue) > 250) 
+Serial.println("Vibration Detected"); 
+else 
+Serial.println("Vibration NOT deteced"); 
+counter = 0;                // start at the begin 
+minValue = analogRead(vibrationSensorPin); 
+maxValue = analogRead(vibrationSensorPin); // give them a value from the sensor to start 
+with 
+} 
+delay( 20);        
+} 
+
+
+
+
+
+
+
+
+Experiment No 4 
+Name of Student         
+M.Sc II Roll No 
+Title of Experiment- To write a program to connect with the available Wi-Fi using Arduino. 
+Program 
+#include <ESP8266WiFi.h> 
+// Replace with your actual Wi-Fi credentials 
+const char* ssid = "RedmiNote8Pro";        
+const char* password = "12345678"; //      
+void setup() { 
+Serial.begin(115200); 
+delay(100); 
+// Start Wi-Fi connection 
+Serial.println(); 
+Serial.println("Connecting to WiFi..."); 
+//      
+Enter your Wi-Fi name (SSID) 
+Enter your Wi-Fi password 
+WiFi.begin(ssid, password);  // Connect to WiFi 
+// Wait until connected 
+while (WiFi.status() != WL_CONNECTED) { 
+delay(500); 
+Serial.print("."); 
+} 
+Serial.println(); 
+Serial.println("WiFi connected!"); 
+Serial.print("IP Address: "); 
+Serial.println(WiFi.localIP()); 
+} 
+void loop() { 
+// You can add tasks here that require WiFi connection 
+} 
+
+
+
+
+
+
+
+Experiment No 5 
+Name of Student         
+M.Sc II Roll No 
+Title of Experiment- To write a program to get temperature notification using Arduino.. 
+Program 
+#include <DHT.h> 
+/*  Interfacing Temperature and Humidity Sensor (DHT11)-using One Wire 
+Protocol */ 
+#include<DHT.h>                  
+#define DHTTYPE DHT11          
+int dhtSensorPin = 6; 
+DHT dht(dhtSensorPin, DHTTYPE);     
+float t, h; 
+void setup() 
+{ 
+Serial.begin(9600); 
+dht.begin(); 
+pinMode(dhtSensorPin, INPUT); 
+delay(2000); 
+} 
+//define library for sensor 
+//define macro 
+//pin initialization 
+
+
+
+
+
+
+
+
+Experiment No 6 
+Name of Student         
+M.Sc II Roll No 
+Title of Experiment- To write a program for LDR to vary the light intensity of LED using 
+Arduino 
+Program 
+// Pin Definitions 
+#define LDR_PIN A0     // LDR connected to analog pin A0 
+#define LED_PIN D4     // LED connected to digital pin D4 (GPIO2) 
+void setup() { 
+Serial.begin(115200);      
+// Start serial monitor 
+pinMode(LED_PIN, OUTPUT);  // Set LED pin as output 
+} 
+void loop() { 
+int ldrValue = analogRead(LDR_PIN);  // Read analog value from LDR 
+Serial.print("LDR Value: "); 
+Serial.println(ldrValue); 
+// Adjust threshold as needed. Lower value = brighter environment 
+int threshold = 500; 
+if (ldrValue < threshold) { 
+digitalWrite(LED_PIN, LOW);  // Turn OFF LED (LOW = OFF for D4 on 
+NodeMCU) 
+} else { 
+digitalWrite(LED_PIN, HIGH); // Turn ON LED 
+} 
+delay(500); // Delay for stability 
+} 
+
+
+
+
+
+Experiment No 7 
+Name of Student              
+Title of Experiment-  
+Run some python programs on Pi like:  
+a) Read your name and print Hello message with name  
+M.Sc. II Roll No 
+b) Read two numbers and print their sum, difference, product and division. 
+c) Word and character count of a given string.  
+d) Area of a given shape (rectangle, triangle and circle) reading shape and appropriate values 
+from standard input. 
+Program 
+# hello_name.py 
+name = input("Enter your name: ") 
+print(f"Hello, {name}! Welcome to Raspberry Pi.") 
+# basic_math.py 
+a = float(input("Enter first number: ")) 
+b = float(input("Enter second number: ")) 
+print(f"Sum = {a + b}") 
+print(f"Difference = {a - b}") 
+print(f"Product = {a * b}") 
+if b != 0: 
+print(f"Division = {a / b}") 
+else: 
+print("Division by zero is not allowed.") 
+# count_words_chars.py 
+text = input("Enter a string: ") 
+words = text.split() 
+num_words = len(words) 
+num_chars = len(text) 
+print(f"Word count: {num_words}") 
+print(f"Character count (including spaces): {num_chars}") 
+# area_calculator.py 
+import math 
+shape = input("Enter shape (rectangle/triangle/circle): ").lower() 
+if shape == "rectangle": 
+length = float(input("Enter length: ")) 
+breadth = float(input("Enter breadth: ")) 
+area = length * breadth 
+print(f"Area of rectangle = {area:.2f}") 
+elif shape == "triangle": 
+base = float(input("Enter base: ")) 
+height = float(input("Enter height: ")) 
+area = 0.5 * base * height 
+print(f"Area of triangle = {area:.2f}") 
+elif shape == "circle": 
+radius = float(input("Enter radius: ")) 
+area = math.pi * radius ** 2 
+print(f"Area of circle = {area:.2f}") 
+else: 
+print("Invalid shape entered.") 
+
+
+
+
+
+
+
+Experiment No 8 
+Name of Student              
+Title of Experiment  
+M.Sc. II Roll No 
+Run some python programs on Pi like: a) Print a name ‘n’ time, where name and n are read from 
+standard input, using for and while loops. b) Handle Divided by Zero Exception. c) Print current 
+time for 10 times with an interval of10seconds. d) Read a file line byline and print the word 
+count of each line 
+# print_name_n_times.py 
+name = input("Enter your name: ") 
+n = int(input("How many times to print your name? ")) 
+print("\nUsing for loop:") 
+for i in range(n): 
+print(f"{i+1}: {name}") 
+print("\nUsing while loop:") 
+count = 0 
+while count < n: 
+print(f"{count+1}: {name}") 
+count += 1 
+# divide_exception.py 
+try: 
+num1 = float(input("Enter numerator: ")) 
+num2 = float(input("Enter denominator: ")) 
+result = num1 / num2 
+print(f"Result = {result}") 
+except ZeroDivisionError: 
+print("Error: Division by zero is not allowed.") 
+# print_time_interval.py 
+import time 
+from datetime import datetime 
+print("Printing current time every 10 seconds (10 times):") 
+for i in range(10): 
+print(f"{i+1}: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}") 
+time.sleep(10) 
+# file_word_count.py 
+file_path = input("Enter file path (e.g., /home/pi/test.txt): ") 
+try: 
+with open(file_path, 'r') as f: 
+line_num = 1 
+for line in f: 
+words = line.strip().split() 
+print(f"Line {line_num}: {len(words)} words") 
+line_num += 1 
+except FileNotFoundError: 
+print("File not found. Please check the path.") 
+
+
+
+
+
+
+Experiment No 9 
+Name of Student              
+Title of Experiment  
+M.Sc. II Roll No 
+Run some python programs on Pi like a) Light an LED through Python program b) Get input 
+from two switches and switch on corresponding LEDs c) Flash an LED at a given-on time and 
+off time cycle, where the two times are taken from a file 
+Program 1 
+# Program to interface LED to Raspberrry Pi 
+import RPi.GPIO as GPIO 
+import time 
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(8,GPIO.OUT) 
+GPIO.setup(10,GPIO.OUT) 
+GPIO.setup(16,GPIO.OUT) 
+GPIO.setup(18,GPIO.OUT) 
+GPIO.setup(22,GPIO.OUT) 
+GPIO.setup(24,GPIO.OUT) 
+GPIO.setup(26,GPIO.OUT) 
+GPIO.setup(32,GPIO.OUT) 
+GPIO.output(8,False) 
+GPIO.output(10,False) 
+GPIO.output(16,False) 
+GPIO.output(18,False) 
+GPIO.output(22,False) 
+GPIO.output(24,False) 
+GPIO.output(26,False) 
+GPIO.output(32,False) 
+while(True): 
+GPIO.output(8,True) 
+GPIO.output(10,True) 
+GPIO.output(16,True) 
+GPIO.output(18,True) 
+GPIO.output(22,True) 
+GPIO.output(24,True) 
+GPIO.output(26,True) 
+GPIO.output(32,True) 
+print("LED ON") 
+time.sleep(2) 
+GPIO.output(8,False) 
+GPIO.output(10,False) 
+GPIO.output(16,False) 
+GPIO.output(18,False) 
+GPIO.output(22,False) 
+GPIO.output(24,False) 
+GPIO.output(26,False) 
+GPIO.output(32,False) 
+print("LED OFF") 
+time.sleep(2) 
+Program 2 
+# Program to interface LED to Raspberry Pi 
+import RPi.GPIO as GPIO 
+import time 
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(8,GPIO.OUT) 
+GPIO.setup(10,GPIO.OUT) 
+GPIO.setup(16,GPIO.OUT) 
+GPIO.setup(18,GPIO.OUT) 
+GPIO.setup(22,GPIO.OUT) 
+GPIO.setup(24,GPIO.OUT) 
+GPIO.setup(26,GPIO.OUT) 
+GPIO.setup(32,GPIO.OUT) 
+GPIO.output(8,False) 
+GPIO.output(10,False) 
+GPIO.output(16,False) 
+GPIO.output(18,False) 
+GPIO.output(22,False) 
+GPIO.output(24,False) 
+GPIO.output(26,False) 
+GPIO.output(32,False) 
+while(True): 
+GPIO.output(8,True) 
+time.sleep(0.2) 
+GPIO.output(10,True) 
+time.sleep(0.2) 
+GPIO.output(16,True) 
+time.sleep(0.2) 
+GPIO.output(18,True) 
+time.sleep(0.2) 
+GPIO.output(22,True) 
+time.sleep(0.2) 
+GPIO.output(24,True) 
+time.sleep(0.2) 
+GPIO.output(26,True) 
+time.sleep(0.2) 
+GPIO.output(32,True) 
+time.sleep(0.2) 
+GPIO.output(8,False) 
+time.sleep(0.2) 
+GPIO.output(10,False) 
+time.sleep(0.2) 
+GPIO.output(16,False) 
+time.sleep(0.2) 
+GPIO.output(18,False) 
+time.sleep(0.2) 
+GPIO.output(22,False) 
+time.sleep(0.2) 
+GPIO.output(24,False) 
+time.sleep(0.2) 
+GPIO.output(26,False) 
+time.sleep(0.2) 
+GPIO.output(32,False) 
+time.sleep(0.2) 
+Program 3 
+# Progrtam to take feedback from the switch using Raspberry Pi 
+import RPi.GPIO as GPIO 
+import time 
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(8,GPIO.IN) 
+GPIO.setup(10,GPIO.OUT) 
+GPIO.output(10,False) 
+y=0 
+dcount=0 
+while(True): 
+x=GPIO.input(8) 
+#single pressed 
+if(x==0): 
+GPIO.output(10,True) 
+print("Switch Pressed") 
+else: 
+GPIO.output(10,False) 
+print("Switch Released") 
