@@ -1,0 +1,17 @@
+1[1] 4[2] 15[2]17[2]19[2]
+mkdir devops2
+cd devops2 
+touch index.html
+git init 
+hint..
+git status
+git add index.html
+git status
+git commit -m "c1"
+git status
+git log
+git diff 
+git add index.html -commit -git log
+git add index.html
+git commit -m "c3"
+git diff 
