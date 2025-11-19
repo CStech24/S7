@@ -1,0 +1,19 @@
+as 2 2[2]3[2]5[2]10[2]11[2]18[2]19[1]20[2]23[2]  
+touch file1.html
+git status
+git add file1.html
+git status
+git commit -m"c1"
+git branch fe
+git checkout fe
+//switched to branch fe
+touch style.css
+git status
+git add style.css
+git status
+//on branch fe
+git commit -m"c2"
+git push origin fe
+git checkout main 
+git pull origin main
+//create mode style.css 
